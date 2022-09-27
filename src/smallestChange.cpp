@@ -15,7 +15,7 @@ using namespace std;
 /* Function will taking in amount in coin value/cents
  * If curreny coins are in multiples of each other than won't run into situation where
  * can have less coins when using lower coin value
- * 1) using coind values that are multiples
+ * 1) using coin values that are multiples
  *    Just remove is able the max amount from value
  * ex. 1,5,10,25 => all are multiples
  * 2) If need to check different arrangments of the coin values
