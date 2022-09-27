@@ -11,7 +11,6 @@
 #include <limits>
 using namespace std;
 
-
 /* Function will taking in amount in coin value/cents
  * If curreny coins are in multiples of each other than won't run into situation where
  * can have less coins when using lower coin value
@@ -50,6 +49,29 @@ int smallestChange_Recursive(const vector<int> &curreny, int value)
 	return minChange; // Handles base case value == 0
 }
 
+int smallestChange_recursive2(const vector<int> &coins, int value) {
+	// Return recursive
+	if (value <= 0) {
+		return 0;
+	}
+
+	// Find min num coins per value
+	int min_coins = value;
+	for (int coin : coins) {
+		if (coin <= value) {
+			int num_coins = smallestChange_recursive2(coins, value - coin) + 1;
+			if (min_coins > num_coins) {
+				min_coins = num_coins;
+			}
+		}
+		// if sorted ascending order
+		else {
+			break; // Rest are bigger
+		}
+	}
+
+	return min_coins;
+}
 
 // Memoization
 int smallestChange_RecursiveDP(const vector<int> &curreny, int value, int cache[])

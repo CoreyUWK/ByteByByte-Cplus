@@ -8,7 +8,7 @@
 #ifndef NUMBEROFONESINBINARY_H_
 #define NUMBEROFONESINBINARY_H_
 
-
+/* Q: Find the number of 1s in the binary representation of a number. */
 void numberOfOnesInBinaryMain();
 
 
