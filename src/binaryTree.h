@@ -20,6 +20,8 @@ using namespace std;
  * 	Node * createNode(int value)
  * 	void insert(Node *root, int data) - based on left < right */
 
+/* Q: Given a binary tree, write a function to test if the tree is a binary search tree. */
+
 template <typename T>
 class BTree
 {

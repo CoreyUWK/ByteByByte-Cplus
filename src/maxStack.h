@@ -10,6 +10,9 @@
 #include <stack>
 using namespace std;
 
+/* Q: Design a stack with a push, pop, and max function which returns max value in stack.
+All operations run in O(1) time. */
+
 /* Or could also have had instead of a maxNode pointer make it an oldMax pointer
  * then in the class have a variable for maxNode pointer  */
 class MaxStackOverlay
