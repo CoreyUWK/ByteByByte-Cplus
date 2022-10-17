@@ -11,10 +11,13 @@
 
 using namespace std;
 
-/* Find median of two sorted arrays */
+/* Find median of two sorted arrays
+ arr1 [1,3,5]
+ arr2 [2,4,6]
 
+ median(arr1, arr2) = 3.5
 
-/* arr1 = {1,5,7,10}
+ * arr1 = {1,5,7,10}
  * arr2 = {3,4,8,9}
  *
  * 1) merge arrays into one larger one in sorted order O(n), then take the median of the larger array by taking the middle values
@@ -29,7 +32,8 @@ using namespace std;
  * 		got to index1 and get median
  * 3) Reduce arrays based on median
  * Take median of each array and until reduce
- *
+ * 4) O(n) have 4 pointer index's to first and last element per each array, and per each iteration move min(first's)+1 and max(last's)-1
+ * till hit middle.
  * */
 double median(vector<int> &arr, int start, int end,
 		int &medianIndex1, int &medianIndex2)
@@ -59,6 +63,7 @@ double median(vector<int> &arr, int start, int end,
 }
 
 // O(log(n)) cause each time removeing half from each array till get to size of 2
+// removing half by comparing median of start-to-end subarray
 double medianOfArrays(vector<int> arr1, vector<int> arr2)
 {
 	if (arr1.size() == 0 || arr1.size() != arr2.size())
@@ -149,7 +154,6 @@ double SubArray::getMedian(int &medianIndex1, int &medianIndex2)
 	return median;
 }
 
-
 double medianOfArrays2Helper(SubArray &subArr1, SubArray &subArr2)
 {
 	int *arr1 = subArr1.getArray();
@@ -193,7 +197,6 @@ double medianOfArrays2Helper(SubArray &subArr1, SubArray &subArr2)
 	return medianOfArrays2Helper(subArr1, subArr2);
 }
 
-
 double medianOfArrays2(vector<int> &arr1, vector<int> &arr2)
 {
 	if (arr1.size() == 0 || arr1.size() != arr2.size())
@@ -206,7 +209,6 @@ double medianOfArrays2(vector<int> &arr1, vector<int> &arr2)
 
 	return medianOfArrays2Helper(subArr1, subArr2);
 }
-
 
 
 void medianOfArraysMain()

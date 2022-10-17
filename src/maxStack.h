@@ -14,7 +14,10 @@ using namespace std;
 All operations run in O(1) time. */
 
 /* Or could also have had instead of a maxNode pointer make it an oldMax pointer
- * then in the class have a variable for maxNode pointer  */
+ * then in the class have a variable for maxNode pointer 
+ 
+ Or could have just stored in stack (value, max) and take max to be max(top, value). Need to track so 
+ when pop from stack still have max. */
 class MaxStackOverlay
 {
 	/* other way - will have easyier logic */
