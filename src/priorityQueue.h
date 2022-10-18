@@ -11,6 +11,8 @@
 
 using namespace std;
 
+/* Implement a priority queue with push and pop.
+- using binary heap and array as underlying data structure */
 
 // Priortiy Queue -> with array as base structure
 class PriorityQueue

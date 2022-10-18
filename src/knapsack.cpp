@@ -40,6 +40,8 @@ using namespace std::chrono;
  * 8-111
  * Or max value + 1 = (2^n - 1) + 1 = 2^n
  * 2) Other way of thinking is for every chose two paths get created, so for n choses we have 2^n paths or nodes in tree
+ * 3) greedy solution select max viable weighted item till done.
+ * Item: [30, 120], [20, 100] => spent the max weight=50 and value=120+100=220
  *  */
 int knapsack(int index, const vector<int> &weights, const vector<int> &values, const int maxWeight)
 {
@@ -306,3 +308,32 @@ void knapsackMain()
 	cout << "Time taken by function: "
 		 << duration.count() << " microseconds" << endl;
 }
+
+/*
+
+// If can have multiple of each item in knapsack
+int knapsack(const vector<int> &weights, const vector<int> &values, const int maxWeight, unordered_map<int, int> &cache) {
+    if (maxWeight == 0) {
+        return 0;
+    }
+    else if (cache.find(maxWeight) != cache.end()) {
+        return cache[maxWeight];
+    }
+    
+    int maxValue = 0;
+    for (int i = 0; i < weights.size(); ++i) {
+        int leftWeight = maxWeight - weights[i];
+        
+        if (leftWeight >= 0) {
+            int value = values[i] + knapsack(weights, values, leftWeight, cache);
+            if (maxValue < value) {
+                maxValue = value;
+            }
+        }
+    }
+    cache[maxWeight] = maxValue;
+    
+    return maxValue;
+}
+ 
+ */

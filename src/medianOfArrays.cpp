@@ -34,6 +34,13 @@ using namespace std;
  * Take median of each array and until reduce
  * 4) O(n) have 4 pointer index's to first and last element per each array, and per each iteration move min(first's)+1 and max(last's)-1
  * till hit middle.
+ * 5) O(n/2) we know if one of the arrays has size 4, then both together is 4+4=8. And as these are even will have median using 2 values.
+ * Hence, 3,2,3 which means we need to move 3 index's to get to middle for median. So,
+ *      V
+ * [3,4,7,10]  3,4,5,[6,7],8,9,10
+ * [5,6,8,9]
+ *    ^
+ * Keep moving pointer (starting from beginning index) until moved total of 3 spots to get median[6,7].
  * */
 double median(vector<int> &arr, int start, int end,
 		int &medianIndex1, int &medianIndex2)

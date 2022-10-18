@@ -10,12 +10,10 @@
 #include <unordered_set>
 using namespace std;
 
-
 AutoComplete::~AutoComplete()
 {
 	delete trie;
 }
-
 
 void AutoComplete::insert(string word)
 {
@@ -225,3 +223,90 @@ void autoCompleteMain()
 	cout << "Pass: " << pass << endl;
 }
 
+//-------------------------------------------------------
+#include <iostream>
+#include <vector>
+#include <cassert>
+#include <unordered_map>
+#include <algorithm>
+#include <unordered_set>
+#include <set>
+#include <memory>
+#include <stack>
+using namespace std;
+
+class AutoComplete_Latest {
+    struct Node {
+        bool sentenceEnd;
+        unordered_map<char, unique_ptr<Node>> children;
+        
+        Node() : sentenceEnd(false) {}
+    };
+    
+    unordered_map<char, unique_ptr<Node>> trie;
+    
+    void wordsHelper(string &prefix, vector<string> &list, Node *n) {
+        if (n->sentenceEnd) {
+            list.push_back(prefix);
+        }
+        
+        for (auto &c : n->children) {
+            prefix += c.first;
+            wordsHelper(prefix, list, c.second.get());
+            prefix.pop_back();
+        }
+    }
+    
+    public:
+    vector<string> words(string prefix) {
+        unordered_map<char, unique_ptr<Node>> *cur = &trie;
+        Node *n;
+        vector<string> words;
+
+        bool foundPrefix = true;
+        for (auto c : prefix) {
+            if (cur->find(c) == cur->end()) {
+                foundPrefix = false;
+                break;
+            }
+            n = (*cur)[c].get();
+            cur = &( (*cur)[c].get()->children);
+        }
+        if (!foundPrefix) {
+            return words;
+        }
+
+        wordsHelper(prefix, words, n);
+        
+        return words;
+    }
+    
+    void insert(string word) {
+    	auto *cur = &trie;
+    	Node *n;
+        for (auto c : word) {
+            if ( (*cur).find(c) == (*cur).end() ) {
+                cur->emplace ( c, make_unique<Node>() );
+            }
+            n = (*cur)[c].get();
+            cur = &(n->children);
+        }
+        n->sentenceEnd = true;
+    }
+};
+
+int main_latest() {
+	const vector<string> words = {"abc", "acd", "bcd", "def", "a", "aba"};
+	AutoComplete_Latest trie;
+	for (auto word : words)
+	{
+		trie.insert(word);
+	}
+	
+	vector<string> foundWords = trie.words("a");
+    for (auto words : foundWords) {
+        cout << words << endl;
+    }
+
+    return 0;
+}

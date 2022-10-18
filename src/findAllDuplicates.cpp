@@ -9,10 +9,10 @@
 #include <cassert>
 #include <vector>
 #include <unordered_set>
+#include <set>
 using namespace std;
 
 /* Given array containing values 1<= x <= len(array) find all duplicated in array */
-
 
 /* 1) Brute Force method is a O(n^2) loop checking each value against all others to see if duplicate
  * 2) Use hash to track processed values. Time O(n), space O(n)
@@ -58,6 +58,21 @@ vector<int> findAllDuplicates(vector<int> &list)
 	copy(duplicatesHash.begin(), duplicatesHash.end(), duplicates.begin()); */
 
 	return duplicates;
+}
+
+vector<int> findAllDuplicatesV2(const vector<int> &list) {
+    set<int> hash;
+    vector<int> dups;
+    for (auto i : list) {
+        if (hash.find(i) == hash.end()) {
+            hash.insert(i);
+        }
+    }
+    
+    for (auto i : hash) {
+        dups.push_back(i);    
+    }
+    return dups;
 }
 
 

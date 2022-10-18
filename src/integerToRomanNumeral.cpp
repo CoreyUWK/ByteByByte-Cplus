@@ -10,6 +10,12 @@
 #include <array>
 using namespace std;
 
+/* Given an integer, write a function to return its roman numeral representation.
+e.g.
+1 = "I"
+4 = "IV"
+49 = "XLIX"
+ */
 
 const array<int, 13> romanNumeralValue =     {1,   4,    5,   9,    10,  40,   50,  90,   100, 400,
 	    500, 900,  1000};
