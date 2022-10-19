@@ -11,11 +11,15 @@
 
 using namespace std;
 
+/* Given an array containing all the numbers from 1 to n, except 2, find the two missing numbers.
+eg.
+[4,2,3] = 1, 5 */
 
 // 1) sort list O(nlogn) and then search for missing O(n) => Time O(nlogn), Space O(1)
 // 2) hash array O(n) and then go through all expected values i to N and check if exists in hash O(n) => Time O(n), Space O(n)
 // Could subtract two hash's with .erase()
 // 3) (Chosen) xor array O(n), xor expected i to N O(n), then xor the two together to get missing => time O(n), space O(1)
+// 4) brute force O(n^2) loop to find value in array
 int oneMissingNumber(vector<int> arr)
 {
 	int arrXor = 0;
@@ -43,6 +47,9 @@ int oneMissingNumber(vector<int> arr)
 pair<int, int> twoMissingNumbers(vector<int> arr)
 {
 	// 1) Find point where one missing number on one side (less than) and second missing on other side (greater than)
+    // As all values are unqiue (no dups in range 1 to N)
+    // Missing Sum = # = A + B and #/2=half is not missing
+    // Hence, 1 missing] half [1 missing 
 
 	int totalSize = arr.size() + 2;
 	// Sum of expected range = arr.size + 2 => 1 + 2 + 3 + 4 + ... + N + (N + 1) + (N + 2) = [(N + 2) * ((N + 2) + 1)] / 2
@@ -105,6 +112,9 @@ int twoMissingNumbersMain()
 
 	arr = {1,2,3};
 	assert(pass &= ((make_pair(4,5) == twoMissingNumbers(arr))));
+
+	arr = {2,4,5,6,7};
+	assert(pass &= ((make_pair(1,3) == twoMissingNumbers(arr))));
 
 	cout << "Pass: " << pass << endl;
 

@@ -10,6 +10,20 @@
 #include <unordered_set>
 using namespace std;
 
+/* Given a linked list, determine whether or not it contains a cycle.
+E.g.
+1->2->3->4
+   ^     |
+   |_____|
+return true
+
+1->2->3->4->3->4->null
+return false
+
+1) Slow and fast 2x pointers, if they every equal then has loop. To get start of loop, iterate from head and where loop detected.
+When the two equal is point of intersection.
+2) Track nodes in map and if ever at same address then loop. Extra memory no good. 
+*/
 
 struct Node {
 	int value;

@@ -14,6 +14,18 @@
 using namespace std;
 
 /* Given a list of packages and their dependencies to be built, determine valid build order
+ eg.
+ 0:
+ 1: 0
+ 2: 0
+ 3: 1,2
+ 4: 3
+ 
+ 0 -> 1->3->4
+   \> 2/
+   
+ 0,1,2,3,4
+
  * Q:
  * - How input format will look
  * - will there be cycles
@@ -307,3 +319,77 @@ int buildOrderMain()
 
 	return 0;
 }
+
+
+//------------------------------------------------
+vector<int> buildOrder_latest(const vector<vector<int>> &dependencyList) {
+    // Reverse the dependency list for easy lookup O(packages*dependencies)
+    vector<vector<int>> reverseDepList(dependencyList.size());
+    for (int package = 0; package < dependencyList.size(); ++package) {
+        for (int depPackage : dependencyList[package]) {
+            reverseDepList[depPackage].push_back(package);
+        }
+    }
+    
+    queue<int> q;
+    unordered_set<int> visited;
+    // Get all packages with no dependencies O(packages)
+    for (int package = 0; package < dependencyList.size(); ++package) {
+        if (dependencyList[package].empty()) {
+            q.push(package);
+            visited.insert(package);
+        }
+    }
+    
+    // Generate build order O(packages) only visit each package once in queue
+    vector<int> order;
+    while (!q.empty()) {
+        int top = q.front();
+        q.pop();
+        
+        order.push_back(top);
+        
+        for (int revDepPackage : reverseDepList[top]) {
+            if (visited.find(revDepPackage) == visited.end()) {
+                q.push(revDepPackage);
+                visited.insert(revDepPackage);
+            }
+        }
+    }
+    return order;
+}
+
+// OR
+
+void visit_byteByByte(const vector<vector<int>> &dependencyList, int package, unordered_set<int> &tmp_marks, unordered_set<int> &perm_marks, vector<int> &order) {
+    if (tmp_marks.find(package) != tmp_marks.end()) {
+        // Loop in package list
+        throw "Loop in package list";
+    }
+    
+    if (perm_marks.find(package) == perm_marks.end()) {
+        tmp_marks.insert(package);
+        for (int dependPackage : dependencyList[package]) {
+            visit_byteByByte(dependencyList, dependPackage, 
+                tmp_marks, perm_marks, order);
+        }
+        
+        perm_marks.insert(package);
+        tmp_marks.erase(package);
+        order.push_back(package);
+    }
+}
+
+vector<int> buildOrder_byteByByte(const vector<vector<int>> &dependencyList) {
+    vector<int> order; 
+    order.reserve(dependencyList.size());
+    unordered_set<int> tmp_marks;
+    unordered_set<int> perm_marks;
+    for (int i = 0; i < dependencyList.size(); ++i) {
+        if (perm_marks.find(i) == perm_marks.end()) {
+            visit_byteByByte(dependencyList, i, tmp_marks, perm_marks, order);
+        }
+    }
+    return order;
+}
+

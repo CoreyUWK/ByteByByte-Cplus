@@ -15,15 +15,9 @@
 
 using namespace std;
 
-/* Return random node from binary tree
- * Q: - do we know size
- * - do we know values
- * - do we know height or search tree
- * - value range
- * - expected performance and space
- *  */
+/* Implement a binary tree with a method getRandomNode() that returns a random node. */
 
-/* 1) convert tree into array, generate a random number and pull from array O(n) unless makes tree represented by array
+/* 1) convert tree into array (inorder traverse), generate a random number and pull from array O(n) unless makes tree represented by array
  * 2) generate random number and then traverse tree BFS so that we jump n times to get random node O(n)
  * 3) To reduce the time of searching the tree from O(n) to O(logn) could add a why of checking node index in O(1).
  * Hard to make index in O(1) during creation of tree since just having a count would not be correct if nodes can

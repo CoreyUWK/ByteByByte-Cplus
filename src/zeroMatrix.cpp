@@ -10,7 +10,7 @@
 
 using namespace std;
 
-/* Given bool array if any cell is true make rest of row and column true */
+/* Given bool matrix, update it so that if any cell is true make rest of row and column true */
 
 /* 1) Brute force method O(n^2), will need to make a new temporary matrix so that
  *  a set true doesn't get mistaken as an actual true

@@ -8,14 +8,18 @@
 #include <iostream>
 #include <cassert>
 #include <unordered_set>
+#include <unordered_map>
 #include <vector>
 #include<bits/stdc++.h>
 using namespace std;
 
-/* Given unsorted array, find longest sequence of consecutive number */
+/* Given unsorted array, find longest sequence of consecutive numbers, order does not matter.
+[4,2,1,6,5] = 3 [4,5,6]
+[5,5,3,1] = 1 [1], [3], or [5]
+ */
 
 
-/* 1) sort and search in O(nlogn)
+/* 1) sort and search for consecutive numbers in order, O(nlogn)
  * 2) hash and search in O(n) -> takes up more space than n and only works for positive numbers */
 int consecutiveArray_HashArray(const vector<int> &arr)
 {
@@ -120,4 +124,25 @@ int consecutiveArrayMain()
 
 	return 0;
 }
+
+//-------------------------------------
+int consecutiveArray_Latest(const vector<int> &arr) {
+    int maxConsecutive = 1;
+    unordered_map<int, int> hashSet;
+    for (auto i : arr) {
+        hashSet[i] = 1;
+    }
+    
+    for (auto i : arr) {
+        if (hashSet.find(i - 1) != hashSet.end()) {
+            hashSet[i] += hashSet[i-1];
+            
+            if (maxConsecutive < hashSet[i]) {
+                maxConsecutive = hashSet[i];
+            }
+        }
+    }
+    return maxConsecutive;
+}
+
 
