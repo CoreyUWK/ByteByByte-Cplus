@@ -11,6 +11,15 @@
 #include <queue>
 using namespace std;
 
+/* Given a linked list where each node has two pointers 
+one to the next node and one to random node in list,
+write function to clone list.
+eg.
+1->2->3->4->null
+v  v  v  v
+3  1  3  2 
+
+*/
 
 struct Node
 {
@@ -96,6 +105,39 @@ Node * randomLinkedListCopy_hash(Node *root)
 	return copyRoot;
 }
 
+Node * randomLinkedListCopy_HashSimple(Node *root) {
+    if (root == nullptr) return nullptr;
+    
+    Node *head = nullptr;
+    Node *cur = nullptr;
+    
+    unordered_map<Node*,Node*> origToCopy;
+
+    Node *orig = root;
+    while (orig != nullptr) {
+        if (cur == nullptr) {
+            head = new Node(orig->value);
+            cur = head;
+        }
+        else {
+            cur->next = new Node(orig->value);
+            cur = cur->next;
+        }
+        
+        origToCopy[orig] = cur;
+        orig = orig->next;
+    }
+    
+    orig = root;
+    cur = head;
+    while (orig != nullptr) {
+        cur->random = origToCopy[orig->random];
+        orig = orig->next;
+        cur = cur->next;
+    }
+    
+    return head;
+}
 
 // Time: O(n) Space: O(1)
 Node * randomLinkedListCopy_inplace(Node *root)

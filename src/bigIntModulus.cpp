@@ -11,7 +11,12 @@
 
 using namespace std;
 
-/* When performing modules == remainder of division
+/* Given a list of bytes a, each representing one byte of a larger integer 
+eg. b = {0x12, 0x34, 0x56, 0x78} = 0x12345678
+Find a % b
+mod({0x03, 0xED}, 10) = 5
+
+   When performing modules == remainder of division
  * ex. 15 / 3 = 5 r0 so => 15 % 3 = 0
  * for a byte value -> 255 % 7 = 3 as 255 / 7 = 36 r3 since 36*7=252 so 255-252=3
  *

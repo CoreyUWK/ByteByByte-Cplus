@@ -10,7 +10,7 @@
 #include <algorithm>
 using namespace std;
 
-/* Finds largest square sub-matrix of all 1's and returns size nxn */
+/* Given 2D array of 1s and 0s, find largest square sub-array of all 1's and returns size nxn */
 
 template<int rows, int cols>
 void squareSubmatrixPrint(int matrix[rows][cols])
@@ -210,7 +210,7 @@ int squareSubmatrixBruteForce_RecursiveMemoization(int matrix[rows][cols])
 /* Using the squareSubmatrixBruteForce_RecursiveMemoization() top-down solution to flip and make DP tabular solution
  * The top-down each index represented the upper-left-hand-corner of square
  * Recursion recurses to end before working it's way up, it traverses the array backwards, and
- * starts solving subproblems with bottom-right-hand-corcer if the square
+ * starts solving subproblems with bottom-right-hand-corner if the square
  *
  * So to change from recursion to iterative will make each index = bottom-right-corner of square
  *
@@ -248,6 +248,41 @@ int squareSubmatrix_DPTabular(int matrix[rows][cols])
 	return size;
 }
 
+
+/* This is same as above DP method
+Runs in O(row*col)
+1) was thinking of a method that tracked rowZeros[] colZeros[] or counting values by rows and cols for continous 1s and if 0 then 
+restarts count. However, this DP method is similar to this idea by counting at [row][col] by taking 1+min of neighbours assuming 
+[row][col] is most bottom right corner of a possible 1s square. */
+int squareSubmatrix(vector<vector<int>> matrix) {
+    for (int row = 1; row < matrix.size(); ++row) {
+        for (int col = 1; col < matrix[0].size(); ++col) {
+            if (matrix[row][col] == 0) continue;
+            
+            int min = matrix.size();
+            for (int i = row - 1; i <= row; ++i) {
+                for (int j = col - 1; j <= col; ++j) {
+                    if (i == row && j == col) break;
+                    if (matrix[i][j] < min) {
+                        min = matrix[i][j];
+                    }
+                }
+            }
+            
+            matrix[row][col] += min;
+        }
+    }
+    
+    int max = 0;
+    for (int row = 0; row < matrix.size(); ++row) {
+        for (int col = 0; col < matrix[0].size(); ++col) {
+            if (matrix[row][col] > max) {
+                max = matrix[row][col];
+            }
+        }
+    }  
+    return max;
+}
 
 
 int squareSubmatrixMain()

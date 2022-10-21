@@ -12,6 +12,9 @@
 #include <algorithm>
 using namespace std;
 
+/* Given an unsorted linked list, write a function to remove all duplicates.
+1) Track nodes with set, and if see duplicate remove O(n)
+2) brute force O(n^2) */
 
 void dedupLinkedListRemoveDuplicate2(forward_list<int> &dedupList)
 {
