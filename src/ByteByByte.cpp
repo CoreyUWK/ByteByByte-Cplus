@@ -58,6 +58,8 @@
 #include "splitLinkedList.h"
 #include "reverseLinkedList.h"
 #include "targetSum.h"
+#include "histogramLargestRectangle.h"
+#include "nQueen.h"
 
 #include <iostream>
 #include <memory>
@@ -237,6 +239,12 @@ int main()
 
 		cout << endl << "targetSumMain" << endl;
 		targetSumMain();
+
+		cout << endl << "histogramLargestRectangleMain" << endl;
+		histogramLargestRectangleMain();
+
+		cout << endl << "nQueenMain" << endl;
+		nQueenMain();
 	}
 	catch (const exception &e)
 	{
